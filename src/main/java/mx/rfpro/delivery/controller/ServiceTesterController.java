@@ -2,7 +2,11 @@ package mx.rfpro.delivery.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import mx.rfpro.delivery.model.Category;
+import mx.rfpro.delivery.model.LoginRequest;
+import mx.rfpro.delivery.model.LoginResponse;
 import mx.rfpro.delivery.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("v1/api/support")
-public class CategoryController{
+@RequestMapping("v1/api")
+public class ServiceTesterController{
 
     private static List<Category> categories;
 
@@ -31,7 +35,7 @@ public class CategoryController{
         categories.add(new Category("Fritangas", 1024, "assets/images/categories/vegetables.png"));
     }
 
-    @GetMapping
+    @GetMapping("/support")
     public ResponseEntity getAllCategories() {
 		try{
 			return ResponseEntity.ok(categories);
@@ -40,8 +44,8 @@ public class CategoryController{
 		}
     }
     
-    @PostMapping
-    public ResponseEntity sigup(@RequestBody User user) {
+    @PostMapping("/auth/signup")
+    public ResponseEntity signUp(@RequestBody User user) {
 
       try{
         return ResponseEntity.ok(user);
@@ -51,4 +55,18 @@ public class CategoryController{
 
     }
 
+    @PostMapping("/auth/login")
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest) {
+      UUID uuid = UUID.randomUUID();
+      LoginResponse loginResponse = new LoginResponse();
+      loginResponse.setToken(uuid.toString());
+      uuid = UUID.randomUUID();
+      loginResponse.setRefreshToken(uuid.toString());
+      try{
+        return ResponseEntity.ok(loginResponse);
+      } catch (Exception ex) {
+        return ResponseEntity.status(500).body(ex.getMessage());
+      }
+
+    }
 }
