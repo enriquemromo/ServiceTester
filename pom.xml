@@ -11,8 +11,8 @@
 	<groupId>mx.rfpro</groupId>
 	<artifactId>delivery</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>delivery</name>
-	<description>Delivery App</description>
+	<name>ServiceTester</name>
+	<description>Service Tester</description>
 
 	<properties>
 		<java.version>1.8</java.version>
